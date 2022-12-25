@@ -48,6 +48,11 @@ public class Main {
                 result = leftVal * rightVal;
                 break;
             case DIVIDE:
+                if(rightVal == 0) {
+//                    IllegalArgumentException exception = new IllegalArgumentException("Zero rightVal not permitted with divide operation");
+//                    throw exception; // or simply use below one line which as same meaning!
+                    throw new IllegalArgumentException("Zero rightVal not permitted with divide operation");
+                }
                 result = leftVal / rightVal;
                 break;
         }
