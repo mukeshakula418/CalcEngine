@@ -16,7 +16,8 @@ public class Main {
         } finally {
             try {
                 System.out.println("Closing file- " + args[0]);
-                reader.close();
+                if(reader != null)
+                    reader.close();
             } catch (Exception ex) {
                 System.out.println("Error closing file");
             }
