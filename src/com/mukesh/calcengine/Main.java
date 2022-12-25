@@ -24,9 +24,8 @@ public class Main {
             try{
                 performOperation(inputLine);
             } catch (InvalidStatementException ex) {
-                System.out.println("Error invalid statement - " + ex.getMessage());
-                if (ex.getCause() != null)
-                    System.out.println(" Caused by " + ex.getCause());
+                System.out.println("Error: invalid statement - " + ex.getMessage() + " - " + inputLine);
+                writeInvalidStatementExceptionToLog(ex, inputLine);
             }
     }
 
@@ -89,6 +88,18 @@ public class Main {
             value = Integer.parseInt(word);
 
         return value;
+    }
+
+    private static void writeInvalidStatementExceptionToLog(InvalidStatementException ex, String inputLine) {
+        System.err.println("");
+        System.err.println("**********************************");
+        System.err.println("Information written to log system");
+        System.err.println("**********************************");
+
+        System.err.println(ex.getMessage() + " - " + inputLine);
+        if(ex.getCause() != null)
+            System.err.println(" caused by " + ex.getCause());
+        ex.printStackTrace(System.err);
     }
 
 }
