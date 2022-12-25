@@ -13,19 +13,21 @@ public class Main {
             System.out.println("File not found: " + args[0]);
         } catch (IOException ex) {
             System.out.println("Error reading file - " + ex.getMessage());
-        } catch (InvalidStatementException ex) {
-            System.out.println("Error invalid statement - " + ex.getMessage());
-            if(ex.getCause() != null)
-                System.out.println(" Caused by " + ex.getCause());
         } catch (Exception ex) {
             System.out.println("Error processing file - " + ex.getMessage());
         }
     }
 
-    private static void processFile(BufferedReader reader) throws IOException, InvalidStatementException {
+    private static void processFile(BufferedReader reader) throws IOException {
         String inputLine = null;
         while((inputLine = reader.readLine()) != null)
-            performOperation(inputLine);
+            try{
+                performOperation(inputLine);
+            } catch (InvalidStatementException ex) {
+                System.out.println("Error invalid statement - " + ex.getMessage());
+                if (ex.getCause() != null)
+                    System.out.println(" Caused by " + ex.getCause());
+            }
     }
 
     private static void performOperation(String inputLine) throws InvalidStatementException{
