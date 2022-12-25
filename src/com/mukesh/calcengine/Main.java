@@ -8,9 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))){
-            String inputLine = null;
-            while((inputLine = reader.readLine()) != null)
-                performOperation(inputLine);
+            processFile(reader);
         } catch (FileNotFoundException ex) {
             System.out.println("File not found: " + args[0]);
         } catch (IOException ex) {
@@ -18,6 +16,12 @@ public class Main {
         } catch (Exception ex) {
             System.out.println("Error processing file - " + ex.getMessage());
         }
+    }
+
+    private static void processFile(BufferedReader reader) throws IOException {
+        String inputLine = null;
+        while((inputLine = reader.readLine()) != null)
+            performOperation(inputLine);
     }
 
     private static void performOperation(String inputLine) {
