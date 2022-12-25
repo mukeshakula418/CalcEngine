@@ -1,6 +1,8 @@
 package com.mukesh.calcengine;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
 
@@ -9,8 +11,12 @@ public class Main {
             String inputLine = null;
             while((inputLine = reader.readLine()) != null)
                 performOperation(inputLine);
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found: " + args[0]);
+        } catch (IOException ex) {
+            System.out.println("Error reading file - " + ex.getMessage());
         } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
+            System.out.println("Error processing file - " + ex.getMessage());
         }
     }
 
