@@ -15,6 +15,8 @@ public class Main {
             System.out.println("Error reading file - " + ex.getMessage());
         } catch (InvalidStatementException ex) {
             System.out.println("Error invalid statement - " + ex.getMessage());
+            if(ex.getCause() != null)
+                System.out.println(" Caused by " + ex.getCause());
         } catch (Exception ex) {
             System.out.println("Error processing file - " + ex.getMessage());
         }
@@ -27,16 +29,22 @@ public class Main {
     }
 
     private static void performOperation(String inputLine) throws InvalidStatementException{
-        String[] parts = inputLine.split(" ");
-        if(parts.length != 3)
-            throw new InvalidStatementException("Statement must have 3 parts: operation leftVal rightVal");
-        MathOperation operation = MathOperation.valueOf(parts[0].toUpperCase());
-        int leftVal = valueFromWord(parts[1]);
-        int rightVal = valueFromWord(parts[2]);
+        try {
+            String[] parts = inputLine.split(" ");
+            if (parts.length != 3)
+                throw new InvalidStatementException("Statement must have 3 parts: operation leftVal rightVal");
+            MathOperation operation = MathOperation.valueOf(parts[0].toUpperCase());
+            int leftVal = valueFromWord(parts[1]);
+            int rightVal = valueFromWord(parts[2]);
 
-        int result = execute(operation, leftVal, rightVal);
+            int result = execute(operation, leftVal, rightVal);
 
-        System.out.println(inputLine + " = " + result);
+            System.out.println(inputLine + " = " + result);
+        } catch (InvalidStatementException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw new InvalidStatementException("Error processing statement", ex);
+        }
     }
 
     static int execute(MathOperation operation, int leftVal, int rightVal) {
