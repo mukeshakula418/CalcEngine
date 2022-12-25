@@ -5,12 +5,21 @@ import java.io.FileReader;
 public class Main {
 
     public static void main(String[] args) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(args[0]))) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(args[0]));
             String inputLine = null;
             while((inputLine = reader.readLine()) != null)
                 performOperation(inputLine);
         } catch (Exception ex) {
             System.out.println("Error: " + ex.getMessage());
+        } finally {
+            try {
+                System.out.println("Closing file- " + args[0]);
+                reader.close();
+            } catch (Exception ex) {
+                System.out.println("Error closing file");
+            }
         }
     }
 
